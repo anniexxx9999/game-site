@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Play Property Empire online - the classic Monopoly board game experience in your browser. Buy properties, collect rent, and build your real estate empire. Free to play!">
-    <meta name="keywords" content="Property Empire, monopoly online, board game, property game, browser game, free game, real estate, strategy game">
+    <meta name="description" content="PuzzleCove - Your ultimate destination for free online games. Play Property Empire, Puzzle World, Tower Builder and more exciting games in your browser!">
+    <meta name="keywords" content="online games, free games, browser games, puzzle games, strategy games, building games, PuzzleCove">
     <meta name="author" content="PuzzleCove">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Property Empire - Online Monopoly Game | PuzzleCove">
-    <meta property="og:description" content="Build your real estate empire in this classic Monopoly experience. Buy properties, collect rent, and dominate the board. Play Property Empire free in your browser!">
+    <meta property="og:title" content="PuzzleCove - Free Online Games Portal">
+    <meta property="og:description" content="Discover amazing free online games! Play Property Empire, Puzzle World, Tower Builder and more. No downloads required!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://puzzlecove.space">
     <meta property="og:site_name" content="PuzzleCove">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Property Empire - Online Monopoly Game">
-    <meta name="twitter:description" content="Build your real estate empire in this classic Monopoly board game experience that tests your business strategy.">
+    <meta name="twitter:title" content="PuzzleCove - Free Online Games Portal">
+    <meta name="twitter:description" content="Discover amazing free online games! Play instantly in your browser.">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://puzzlecove.space">
@@ -26,7 +26,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     
-    <title>Property Empire - Online Monopoly Game | PuzzleCove</title>
+    <title>PuzzleCove - Free Online Games Portal</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -41,49 +41,51 @@
             --apple-dark: #1D1D1F;
         }
         
-        .apple-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .game-container {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
         .hero-section {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
         
-        iframe {
-            border-radius: 12px;
+        .game-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        @media (max-width: 768px) {
-            .game-iframe {
-                height: 500px;
-            }
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         
-        @media (min-width: 769px) {
-            .game-iframe {
-                height: 600px;
-            }
+        .category-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .search-input:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
     </style>
 </head>
 
 <body class="bg-gray-50 text-gray-900 font-sans antialiased">
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200">
+    <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
-                    <h1 class="text-2xl font-bold text-gray-900">PuzzleCove</h1>
+                    <h1 class="text-2xl font-bold text-gray-900">🎮 PuzzleCove</h1>
                 </div>
                 <nav class="hidden md:flex space-x-8">
-                    <a href="#game" class="text-gray-600 hover:text-blue-600 transition-colors">Play Game</a>
+                    <a href="#games" class="text-gray-600 hover:text-blue-600 transition-colors">All Games</a>
+                    <a href="#strategy" class="text-gray-600 hover:text-blue-600 transition-colors">Strategy</a>
+                    <a href="#puzzle" class="text-gray-600 hover:text-blue-600 transition-colors">Puzzle</a>
+                    <a href="#building" class="text-gray-600 hover:text-blue-600 transition-colors">Building</a>
                     <a href="#about" class="text-gray-600 hover:text-blue-600 transition-colors">About</a>
-                    <a href="#features" class="text-gray-600 hover:text-blue-600 transition-colors">Features</a>
                 </nav>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-blue-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
@@ -92,243 +94,306 @@
     <section class="hero-section py-16 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto text-center">
             <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                Property Empire
+                Welcome to PuzzleCove
             </h1>
             <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                Build your real estate empire and dominate the board in this classic strategy game that tests your business acumen and negotiation skills.
+                Discover amazing free online games! Play instantly in your browser - no downloads required.
             </p>
-            <a href="#game" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg">
-                Play Now
+            
+            <!-- Search Box -->
+            <div class="max-w-md mx-auto mb-8">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        id="game-search"
+                        placeholder="Search games..."
+                        class="search-input w-full px-4 py-3 pl-12 border border-gray-300 rounded-full focus:outline-none focus:border-blue-500 transition-colors"
+                    >
+                    <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </div>
+            
+            <a href="#games" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg">
+                Explore Games
             </a>
         </div>
     </section>
 
-    <!-- Game Section -->
-    <section id="game" class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+    <!-- Game Categories -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8 bg-white">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Play Property Empire Online</h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Jump into the action immediately with our browser-based game. No downloads required!
-                </p>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Game Categories</h2>
+                <p class="text-lg text-gray-600">Choose your favorite game type and start playing!</p>
             </div>
             
-            <div class="game-container bg-white rounded-2xl p-6 md:p-8">
-                <iframe 
-                    src="https://www.gameflare.com/embed/monopoly-online/" 
-                    class="w-full game-iframe border-0 rounded-xl"
-                    title="Property Empire Game"
-                    loading="lazy"
-                    allowfullscreen>
-                    <p>Your browser doesn't support iframes. <a href="https://www.gameflare.com/embed/monopoly-online/" target="_blank" rel="noopener noreferrer">Click here to play the game</a>.</p>
-                </iframe>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer" onclick="filterGames('strategy')">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Strategy Games</h3>
+                    <p class="text-gray-600">Test your tactical skills and strategic thinking</p>
+                </div>
+                
+                <div class="text-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer" onclick="filterGames('puzzle')">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Puzzle Games</h3>
+                    <p class="text-gray-600">Challenge your mind with brain-teasing puzzles</p>
+                </div>
+                
+                <div class="text-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer" onclick="filterGames('building')">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Building Games</h3>
+                    <p class="text-gray-600">Create and construct amazing structures</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Games -->
+    <section id="games" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Featured Games</h2>
+                <p class="text-lg text-gray-600">Play our most popular games instantly!</p>
+            </div>
+            
+            <div id="games-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Property Empire -->
+                <div class="game-card bg-white rounded-xl overflow-hidden shadow-lg" data-category="strategy">
+                    <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <svg class="w-16 h-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                            <h3 class="text-xl font-bold">Property Empire</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="category-badge text-white text-xs px-2 py-1 rounded-full">Strategy</span>
+                            <span class="ml-2 text-sm text-gray-500">Board Game</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Build your real estate empire in this classic Monopoly-style game. Buy properties, collect rent, and dominate the board!</p>
+                        <a href="games/property-empire.html" class="block w-full bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                            Play Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Puzzle World -->
+                <div class="game-card bg-white rounded-xl overflow-hidden shadow-lg" data-category="puzzle">
+                    <div class="h-48 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <svg class="w-16 h-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+                            </svg>
+                            <h3 class="text-xl font-bold">Puzzle World</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-green-500 text-white text-xs px-2 py-1 rounded-full">Puzzle</span>
+                            <span class="ml-2 text-sm text-gray-500">Brain Teaser</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">经典2048数字拼图游戏，合并相同数字达到2048目标！考验你的策略思维和规划能力。</p>
+                        <a href="games/puzzle-world.html" class="block w-full bg-green-600 text-white text-center py-2 rounded-lg hover:bg-green-700 transition-colors">
+                            Play Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tower Builder -->
+                <div class="game-card bg-white rounded-xl overflow-hidden shadow-lg" data-category="building">
+                    <div class="h-48 bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <svg class="w-16 h-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            <h3 class="text-xl font-bold">Tower Builder</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-orange-500 text-white text-xs px-2 py-1 rounded-full">Building</span>
+                            <span class="ml-2 text-sm text-gray-500">Construction</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">精准堆叠方块建造最高塔楼！考验你的时机把握和手眼协调能力，挑战你的建造极限。</p>
+                        <a href="games/tower-builder.html" class="block w-full bg-orange-600 text-white text-center py-2 rounded-lg hover:bg-orange-700 transition-colors">
+                            Play Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Snake Game -->
+                <div class="game-card bg-white rounded-xl overflow-hidden shadow-lg" data-category="puzzle">
+                    <div class="h-48 bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <svg class="w-16 h-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z"/>
+                            </svg>
+                            <h3 class="text-xl font-bold">Snake Game</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">Arcade</span>
+                            <span class="ml-2 text-sm text-gray-500">Classic</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">经典贪吃蛇游戏，控制小蛇吃食物成长！避免撞墙和咬到自己，挑战最高分记录。</p>
+                        <a href="games/simple-snake.html" class="block w-full bg-red-600 text-white text-center py-2 rounded-lg hover:bg-red-700 transition-colors">
+                            Play Now
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">About Property Empire</h2>
-            </div>
-            
-            <div class="prose prose-lg mx-auto text-gray-600">
-                <p class="text-xl leading-relaxed mb-6">
-                    Property Empire brings the classic Monopoly experience to your browser with modern online gameplay. Buy, sell, and trade properties while managing your finances strategically. Navigate around the iconic board, collect rent from opponents, and build your property empire to become the ultimate real estate mogul.
-                </p>
-                
-                <p class="text-lg leading-relaxed mb-6">
-                    The game features all the beloved elements of traditional Monopoly with enhanced digital mechanics. Roll the dice, land on properties, make strategic purchases, and negotiate deals with other players. Experience the thrill of building houses and hotels while avoiding bankruptcy and jail time.
-                </p>
-                
-                <p class="text-lg leading-relaxed">
-                    Whether you're a seasoned Monopoly veteran or new to the game, Property Empire offers an accessible yet deep strategic experience. Play solo against AI opponents or challenge friends in multiplayer mode for hours of competitive entertainment.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Game Features</h2>
-                <p class="text-lg text-gray-600">Discover what makes Property Empire an unforgettable gaming experience</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-gray-50 rounded-xl p-6 text-center">
+    <section id="about" class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">About PuzzleCove</h2>
+            <p class="text-lg text-gray-600 mb-8">
+                PuzzleCove is your ultimate destination for free online games. We curate the best browser-based games across multiple categories, ensuring you always have something fun to play. No downloads, no installations - just pure gaming fun!
+            </p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
                     <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Classic Gameplay</h3>
-                    <p class="text-gray-600">Experience the authentic Monopoly rules with digital enhancements for smooth online play.</p>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Instant Play</h3>
+                    <p class="text-gray-600">No downloads required. Play instantly in your browser.</p>
                 </div>
-                
-                <div class="bg-gray-50 rounded-xl p-6 text-center">
+                <div class="text-center">
                     <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Property Management</h3>
-                    <p class="text-gray-600">Buy, sell, and develop properties strategically to maximize your rental income and wealth.</p>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">100% Free</h3>
+                    <p class="text-gray-600">All games are completely free to play forever.</p>
                 </div>
-                
-                <div class="bg-gray-50 rounded-xl p-6 text-center">
+                <div class="text-center">
                     <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Financial Strategy</h3>
-                    <p class="text-gray-600">Manage your money wisely, make smart investments, and negotiate deals to outsmart your opponents.</p>
-                </div>
-                
-                <div class="bg-gray-50 rounded-xl p-6 text-center">
-                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Multiplayer Action</h3>
-                    <p class="text-gray-600">Play with friends or AI opponents in competitive matches that test your business skills.</p>
-                </div>
-                
-                <div class="bg-gray-50 rounded-xl p-6 text-center">
-                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Mobile Friendly</h3>
-                    <p class="text-gray-600">Play seamlessly on any device - desktop, tablet, or mobile phone.</p>
-                </div>
-                
-                <div class="bg-gray-50 rounded-xl p-6 text-center">
-                    <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Instant Play</h3>
-                    <p class="text-gray-600">Jump into a Monopoly game immediately in your browser - no downloads or registration needed.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Play Section -->
-    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">How to Play Property Empire</h2>
-                <p class="text-lg text-gray-600">Master the basics and become a property tycoon</p>
-            </div>
-            
-            <div class="space-y-8">
-                <div class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
-                    <div class="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
-                        1
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Start Your Business Empire</h3>
-                        <p class="text-gray-600">Click "Play Now" to begin building your property empire. The game will load directly in your browser.</p>
-                    </div>
-                </div>
-                
-                <div class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
-                    <div class="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
-                        2
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Learn the Rules</h3>
-                        <p class="text-gray-600">Roll dice to move around the board, buy properties when you land on them, and collect rent from other players.</p>
-                    </div>
-                </div>
-                
-                <div class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
-                    <div class="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
-                        3
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Build and Dominate</h3>
-                        <p class="text-gray-600">Develop your properties with houses and hotels, create monopolies, and bankrupt your opponents to win the game!</p>
-                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Mobile Friendly</h3>
+                    <p class="text-gray-600">Play on any device - desktop, tablet, or mobile.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-12 px-4 sm:px-6 lg:px-8">
+    <footer class="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-6xl mx-auto">
             <div class="grid md:grid-cols-4 gap-8">
                 <div class="col-span-2">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">PuzzleCove</h3>
-                    <p class="text-gray-600 mb-4">
-                        Your destination for exciting online games and puzzle adventures. Play Property Empire and discover more thrilling games.
+                    <h3 class="text-xl font-bold mb-4">🎮 PuzzleCove</h3>
+                    <p class="text-gray-400 mb-4">
+                        Your ultimate destination for free online games. Discover, play, and enjoy amazing games right in your browser!
                     </p>
                 </div>
                 
                 <div>
-                    <h4 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Games</h4>
+                    <h4 class="text-sm font-semibold uppercase tracking-wider mb-4">Games</h4>
                     <ul class="space-y-2">
-                        <li><a href="#game" class="text-gray-600 hover:text-blue-600 transition-colors">Property Empire</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600 transition-colors">More Games</a></li>
+                        <li><a href="games/property-empire.html" class="text-gray-400 hover:text-white transition-colors">Property Empire</a></li>
+                        <li><a href="games/puzzle-world.html" class="text-gray-400 hover:text-white transition-colors">Puzzle World</a></li>
+                        <li><a href="games/tower-builder.html" class="text-gray-400 hover:text-white transition-colors">Tower Builder</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Support</h4>
+                    <h4 class="text-sm font-semibold uppercase tracking-wider mb-4">Categories</h4>
                     <ul class="space-y-2">
-                        <li><a href="#about" class="text-gray-600 hover:text-blue-600 transition-colors">About</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-blue-600 transition-colors">Contact</a></li>
+                        <li><a href="#strategy" class="text-gray-400 hover:text-white transition-colors">Strategy</a></li>
+                        <li><a href="#puzzle" class="text-gray-400 hover:text-white transition-colors">Puzzle</a></li>
+                        <li><a href="#building" class="text-gray-400 hover:text-white transition-colors">Building</a></li>
                     </ul>
                 </div>
             </div>
             
-            <div class="border-t border-gray-200 mt-8 pt-8 text-center">
-                <p class="text-gray-600">
-                    © 2024 PuzzleCove. All rights reserved. Play Property Empire and other exciting games online.
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2024 PuzzleCove. All rights reserved. Play amazing free games online!
                 </p>
             </div>
         </div>
     </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Search functionality
+        document.getElementById('game-search').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const gameCards = document.querySelectorAll('.game-card');
+            
+            gameCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Category filtering
+        function filterGames(category) {
+            const gameCards = document.querySelectorAll('.game-card');
+            
+            gameCards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Scroll to games section
+            document.getElementById('games').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            // Add mobile menu functionality here
+            console.log('Mobile menu clicked');
+        });
+    </script>
 
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "PuzzleCove - Property Empire",
+        "name": "PuzzleCove - Free Online Games",
         "url": "https://puzzlecove.space",
-        "description": "Play Property Empire online - the classic Monopoly board game experience in your browser. Buy properties, collect rent, and build your real estate empire. Free to play!",
+        "description": "Discover amazing free online games! Play Property Empire, Puzzle World, Tower Builder and more instantly in your browser.",
         "potentialAction": {
             "@type": "SearchAction",
             "target": "https://puzzlecove.space/search?q={search_term_string}",
             "query-input": "required name=search_term_string"
-        }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Game",
-        "name": "Property Empire",
-        "description": "Build your real estate empire and dominate the board in this classic Monopoly online experience.",
-        "url": "https://puzzlecove.space",
-        "gamePlatform": "Web Browser",
-        "applicationCategory": "Game",
-        "operatingSystem": "Any",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
         }
     }
     </script>
