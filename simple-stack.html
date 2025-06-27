@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>堆叠塔楼</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .game-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .score-container {
+            margin: 20px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .game-board {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            margin: 0 auto;
+            display: block;
+            border-radius: 10px;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        .btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #ee5a52;
+            transform: translateY(-2px);
+        }
+        .instructions {
+            margin: 20px 0;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .stack-btn {
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 20px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px;
+            transition: all 0.3s;
+        }
+        .stack-btn:hover {
+            background: #45b7aa;
+            transform: scale(1.05);
+        }
+        .game-over {
+            background: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .game-over-content {
+            background: white;
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>🏗️ 堆叠塔楼</h1>
+        <div class="score-container">
+            高度: <span id="height">0</span> | 最佳: <span id="bestHeight">0</span>
+        </div>
+        
+        <canvas id="gameBoard" class="game-board" width="400" height="600"></canvas>
+        
+        <button class="stack-btn" id="stackBtn" onclick="stackBlock()">堆叠方块</button>
+        
+        <div class="controls">
+            <button class="btn" onclick="startGame()">开始游戏</button>
+            <button class="btn" onclick="resetGame()">重新开始</button>
+        </div>
+        
+        <div class="instructions">
+            点击"堆叠方块"按钮在正确时机放置方块<br>
+            方块必须对齐才能继续堆叠，目标是建造最高的塔楼！
+        </div>
+    </div>
+
+    <div class="game-over" id="gameOver">
+        <div class="game-over-content">
+            <h2>游戏结束！</h2>
+            <p>最终高度: <span id="finalHeight">0</span></p>
+            <button class="btn" onclick="resetGame()">再试一次</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameBoard');
+        const ctx = canvas.getContext('2d');
+
+        let blocks = [];
+        let currentBlock = null;
+        let gameRunning = false;
+        let height = 0;
+        let bestHeight = localStorage.getItem('stackBestHeight') || 0;
+        let blockSpeed = 2;
+        let animationId;
+
+        document.getElementById('bestHeight').textContent = bestHeight;
+
+        const colors = [
+            '#ff6b6b', '#4ecdc4', '#45b7aa', '#f9ca24', '#f0932b',
+            '#eb4d4b', '#6c5ce7', '#a29bfe', '#fd79a8', '#fdcb6e'
+        ];
+
+        function Block(x, y, width, height, color) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.color = color;
+            this.direction = 1;
+            this.speed = blockSpeed;
+        }
+
+        Block.prototype.update = function() {
+            this.x += this.direction * this.speed;
+            
+            if (this.x <= 0 || this.x + this.width >= canvas.width) {
+                this.direction *= -1;
+            }
+        };
+
+        Block.prototype.draw = function() {
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+            
+            // Add some shine effect
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.fillRect(this.x, this.y, this.width, this.height / 3);
+        };
+
+        function startGame() {
+            if (gameRunning) return;
+            
+            gameRunning = true;
+            blocks = [];
+            height = 0;
+            blockSpeed = 2;
+            
+            // Add base block
+            const baseBlock = new Block(100, canvas.height - 40, 200, 40, colors[0]);
+            blocks.push(baseBlock);
+            
+            spawnNewBlock();
+            gameLoop();
+            
+            document.getElementById('stackBtn').style.display = 'inline-block';
+            document.getElementById('height').textContent = height;
+        }
+
+        function spawnNewBlock() {
+            if (!gameRunning) return;
+            
+            const lastBlock = blocks[blocks.length - 1];
+            const blockHeight = 40;
+            const y = lastBlock.y - blockHeight;
+            const color = colors[blocks.length % colors.length];
+            
+            currentBlock = new Block(0, y, lastBlock.width, blockHeight, color);
+            blocks.push(currentBlock);
+        }
+
+        function stackBlock() {
+            if (!gameRunning || !currentBlock) return;
+            
+            const lastStableBlock = blocks[blocks.length - 2];
+            
+            // Calculate overlap
+            const leftEdge = Math.max(currentBlock.x, lastStableBlock.x);
+            const rightEdge = Math.min(
+                currentBlock.x + currentBlock.width,
+                lastStableBlock.x + lastStableBlock.width
+            );
+            
+            const overlap = rightEdge - leftEdge;
+            
+            if (overlap <= 0) {
+                // Game over - no overlap
+                gameOver();
+                return;
+            }
+            
+            // Update block position and size based on overlap
+            currentBlock.x = leftEdge;
+            currentBlock.width = overlap;
+            currentBlock.direction = 0; // Stop moving
+            
+            height++;
+            document.getElementById('height').textContent = height;
+            
+            // Increase difficulty
+            if (height % 5 === 0) {
+                blockSpeed += 0.5;
+            }
+            
+            // Spawn next block
+            setTimeout(() => {
+                spawnNewBlock();
+            }, 500);
+        }
+
+        function gameLoop() {
+            if (!gameRunning) return;
+            
+            // Clear canvas
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Update and draw blocks
+            for (let block of blocks) {
+                if (block === currentBlock) {
+                    block.update();
+                }
+                block.draw();
+            }
+            
+            // Move camera up if tower is getting tall
+            if (blocks.length > 10) {
+                ctx.save();
+                const offset = (blocks.length - 10) * 40;
+                ctx.translate(0, offset);
+                ctx.restore();
+            }
+            
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            cancelAnimationFrame(animationId);
+            
+            if (height > bestHeight) {
+                bestHeight = height;
+                localStorage.setItem('stackBestHeight', bestHeight);
+                document.getElementById('bestHeight').textContent = bestHeight;
+            }
+            
+            document.getElementById('finalHeight').textContent = height;
+            document.getElementById('gameOver').style.display = 'flex';
+            document.getElementById('stackBtn').style.display = 'none';
+        }
+
+        function resetGame() {
+            gameRunning = false;
+            cancelAnimationFrame(animationId);
+            
+            blocks = [];
+            currentBlock = null;
+            height = 0;
+            blockSpeed = 2;
+            
+            document.getElementById('height').textContent = height;
+            document.getElementById('gameOver').style.display = 'none';
+            document.getElementById('stackBtn').style.display = 'none';
+            
+            // Clear canvas
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (gameRunning) {
+                    stackBlock();
+                } else {
+                    startGame();
+                }
+            }
+        });
+
+        // Touch controls
+        canvas.addEventListener('click', () => {
+            if (gameRunning) {
+                stackBlock();
+            }
+        });
+
+        // Initialize
+        resetGame();
+    </script>
+</body>
+</html> 
